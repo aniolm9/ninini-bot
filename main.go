@@ -36,7 +36,9 @@ func main() {
     updates, err := bot.GetUpdatesChan(u)
 
     for update := range updates {
-        if update.InlineQuery.Query == "" {
+        if update.InlineQuery == nil {
+            continue
+        } else if update.InlineQuery.Query == "" {
             continue
         }
         log.Printf("[%s] %s", update.InlineQuery.From, update.InlineQuery.Query)
