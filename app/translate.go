@@ -11,7 +11,7 @@ You should have received a copy of the BSD 3 clause license
 along with Nininini Bot. If not, see <https://opensource.org/licenses/BSD-3-Clause>.
 */
 
-package main
+package app
 
 import (
     "regexp"

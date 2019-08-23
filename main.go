@@ -19,6 +19,7 @@ import (
     "io/ioutil"
     "github.com/go-telegram-bot-api/telegram-bot-api"
     "github.com/aniolm9/ninini-bot/tools"
+    "github.com/aniolm9/ninini-bot/app"
 )
 
 func main() {
@@ -34,24 +35,7 @@ func main() {
     u := tgbotapi.NewUpdate(0)
     u.Timeout = 60
     updates, err := bot.GetUpdatesChan(u)
+    tools.Check(err)
 
-    for update := range updates {
-        if update.InlineQuery == nil {
-            continue
-        } else if update.InlineQuery.Query == "" {
-            continue
-        }
-        log.Printf("[%s] %s", update.InlineQuery.From, update.InlineQuery.Query)
-        nininiString := normalToNinini(update.InlineQuery.Query)
-        article := tgbotapi.NewInlineQueryResultArticle("nininiString", nininiString, nininiString)
-
-        inlineConf := tgbotapi.InlineConfig{
-            InlineQueryID:  update.InlineQuery.ID,
-            IsPersonal:     true,
-            CacheTime:      0,
-            Results:        []interface{}{article},
-        }
-        _, err := bot.AnswerInlineQuery(inlineConf)
-        tools.Check(err)
-    }
+    app.ProcessUpdates(updates, bot)
 }
