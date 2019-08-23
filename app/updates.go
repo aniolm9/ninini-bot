@@ -29,7 +29,7 @@ func ProcessUpdates(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
         log.Printf("[%s] %s", update.InlineQuery.From, update.InlineQuery.Query)
         nininiString := normalToNinini(update.InlineQuery.Query)
         article := tgbotapi.NewInlineQueryResultArticle("nininiString", nininiString, nininiString)
-    
+
         inlineConf := tgbotapi.InlineConfig{
             InlineQueryID:  update.InlineQuery.ID,
             IsPersonal:     true,
